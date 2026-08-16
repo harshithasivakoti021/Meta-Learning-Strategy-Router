@@ -1,0 +1,364 @@
+{
+  "dataset_metadata": {
+    "dataset_name": "Titanic",
+    "openml_id": 40945,
+    "source": "OpenML Benchmark Dataset (ID 40945) - Local Cache",
+    "total_rows": 891,
+    "loaded_rows": 891,
+    "is_sampled": false,
+    "default_target": "survived",
+    "description": "Passenger survival binary classification dataset with mixed feature types and missing values."
+  },
+  "meta_features": {
+    "number_of_rows": 891,
+    "number_of_features": 7,
+    "total_columns": 8,
+    "numerical_features": [
+      "pclass",
+      "age",
+      "sibsp",
+      "parch",
+      "fare"
+    ],
+    "numerical_features_count": 5,
+    "categorical_features": [
+      "sex",
+      "embarked"
+    ],
+    "categorical_features_count": 2,
+    "has_mixed_types": true,
+    "missing_values_count": 178,
+    "missing_values_percentage": 2.5,
+    "has_missing_values": true,
+    "duplicate_rows": 0,
+    "duplicate_rows_percentage": 0.0,
+    "target_column": "survived",
+    "is_target_auto_detected": false,
+    "target_type": "classification",
+    "target_details": {
+      "sub_type": "binary",
+      "number_of_classes": 2,
+      "classes": [
+        "1",
+        "0"
+      ],
+      "class_distribution": {
+        "0": {
+          "count": 587,
+          "percentage": 65.88
+        },
+        "1": {
+          "count": 304,
+          "percentage": 34.12
+        }
+      },
+      "class_imbalance_ratio": 1.93,
+      "is_imbalanced": false
+    },
+    "dataset_size": "Small",
+    "dimensionality": "Low",
+    "feature_to_sample_ratio": 0.0079
+  },
+  "recommendations": [
+    {
+      "algorithm": "Random Forest Classifier",
+      "model_key": "RandomForestClassifier",
+      "score": 9.3,
+      "reasons": [
+        "Robust ensemble model capable of capturing complex non-linear decision boundaries.",
+        "Excels at heterogeneous mixed feature spaces (5 numeric, 2 categorical).",
+        "Provides strong regularization against overfitting on smaller samples.",
+        "Tolerant to imputed features with 2.5% missingness."
+      ],
+      "warnings": [
+        "Requires tuning of n_estimators and max_depth on very deep structures."
+      ],
+      "preprocessing_requirements": "Median/Mode imputation + One-Hot Encoding (Feature scaling is NOT strictly necessary for tree splits).",
+      "recommended_params": {
+        "n_estimators": 100,
+        "random_state": 42
+      },
+      "requires_scaling": false,
+      "rank": 1
+    },
+    {
+      "algorithm": "Gradient Boosting Classifier",
+      "model_key": "GradientBoostingClassifier",
+      "score": 9.3,
+      "reasons": [
+        "Sequential boosting produces state-of-the-art predictive performance on structured tabular data.",
+        "Dataset volume provides sufficient samples for gradient descent optimization without excessive training latency.",
+        "Effectively handles interactions between continuous and one-hot encoded categorical variables."
+      ],
+      "warnings": [
+        "Sensitive to noisy outliers in target labels."
+      ],
+      "preprocessing_requirements": "Median/Mode imputation + One-Hot Encoding.",
+      "recommended_params": {
+        "n_estimators": 100,
+        "learning_rate": 0.1,
+        "random_state": 42
+      },
+      "requires_scaling": false,
+      "rank": 2
+    },
+    {
+      "algorithm": "Support Vector Machine (SVM)",
+      "model_key": "SVC",
+      "score": 7.4,
+      "reasons": [
+        "RBF kernel maps features into infinite-dimensional space to separate non-linear clusters.",
+        "Small sample size suits SVM's support-vector-centric formulation without computational bottleneck."
+      ],
+      "warnings": [
+        "Strictly requires normalized/standardized numerical features."
+      ],
+      "preprocessing_requirements": "Imputation + One-Hot Encoding + Mandatory StandardScaler.",
+      "recommended_params": {
+        "random_state": 42,
+        "kernel": "rbf"
+      },
+      "requires_scaling": true,
+      "rank": 3
+    },
+    {
+      "algorithm": "Decision Tree Classifier",
+      "model_key": "DecisionTreeClassifier",
+      "score": 6.6,
+      "reasons": [
+        "Offers complete interpretability with hierarchical IF-THEN rule visualization.",
+        "Naturally handles mixed continuous and categorical feature splits.",
+        "Fast training on small samples."
+      ],
+      "warnings": [
+        "Single decision trees exhibit high variance and are prone to overfitting without pruning."
+      ],
+      "preprocessing_requirements": "Median/Mode imputation + One-Hot Encoding (No feature scaling needed).",
+      "recommended_params": {
+        "max_depth": 5,
+        "random_state": 42
+      },
+      "requires_scaling": false,
+      "rank": 4
+    },
+    {
+      "algorithm": "Logistic Regression",
+      "model_key": "LogisticRegression",
+      "score": 6.5,
+      "reasons": [
+        "Direct, highly interpretable probabilistic log-odds modeling for binary classification.",
+        "Low parameter count prevents severe overfitting on small sample sizes."
+      ],
+      "warnings": [
+        "Cannot model non-linear feature interactions without manual polynomial expansion."
+      ],
+      "preprocessing_requirements": "Imputation + One-Hot Encoding + Mandatory StandardScaler.",
+      "recommended_params": {
+        "max_iter": 1000,
+        "random_state": 42
+      },
+      "requires_scaling": true,
+      "rank": 5
+    },
+    {
+      "algorithm": "K-Nearest Neighbors (KNN)",
+      "model_key": "KNeighborsClassifier",
+      "score": 4.3,
+      "reasons": [
+        "Reasonable sample and feature volume for metric distance computation."
+      ],
+      "warnings": [
+        "Euclidean distance loses physical geometric fidelity on sparse one-hot categorical vectors."
+      ],
+      "preprocessing_requirements": "Imputation + One-Hot Encoding + Mandatory StandardScaler.",
+      "recommended_params": {
+        "n_neighbors": 5
+      },
+      "requires_scaling": true,
+      "rank": 6
+    },
+    {
+      "algorithm": "Naive Bayes (Gaussian)",
+      "model_key": "GaussianNB",
+      "score": 3.7,
+      "reasons": [
+        "Fast, lightweight generative baseline."
+      ],
+      "warnings": [
+        "Strong conditional independence assumption rarely holds in correlated tabular datasets."
+      ],
+      "preprocessing_requirements": "Median imputation + One-Hot Encoding + StandardScaler.",
+      "recommended_params": {},
+      "requires_scaling": true,
+      "rank": 7
+    }
+  ],
+  "holistic_explanation": "The analyzed dataset contains **891 instances** across **7 features**, categorized as a **Small** dataset with **Low** dimensionality. The target represents a **binary classification** task. The target classes are reasonably balanced. Features are heterogeneous (5 numeric, 2 categorical). Data quality analysis identified **2.5% missing values**, requiring robust imputation. Based on these meta-features, the Meta-Learning Strategy Router awarded **Random Forest Classifier** the highest recommendation score of **9.3/10** because it optimally balances representation capacity, non-linear feature interaction modeling, and generalization stability.",
+  "model_evaluations": [
+    {
+      "algorithm": "Random Forest Classifier",
+      "router_rank": 1,
+      "router_score": 9.3,
+      "training_time": 0.157,
+      "metrics": {
+        "accuracy": 0.7151,
+        "precision": 0.71,
+        "recall": 0.7151,
+        "f1_score": 0.712,
+        "precision_macro": 0.6808,
+        "recall_macro": 0.673,
+        "f1_score_macro": 0.6762,
+        "cv_mean": 0.6952,
+        "cv_std": 0.0168,
+        "training_time": 0.157,
+        "confusion_matrix": [
+          [
+            95,
+            23
+          ],
+          [
+            28,
+            33
+          ]
+        ],
+        "confusion_matrix_normalized": [
+          [
+            0.8050847457627118,
+            0.19491525423728814
+          ],
+          [
+            0.45901639344262296,
+            0.5409836065573771
+          ]
+        ],
+        "class_labels": [
+          "0",
+          "1"
+        ]
+      }
+    },
+    {
+      "algorithm": "Gradient Boosting Classifier",
+      "router_rank": 2,
+      "router_score": 9.3,
+      "training_time": 0.1172,
+      "metrics": {
+        "accuracy": 0.7263,
+        "precision": 0.7198,
+        "recall": 0.7263,
+        "f1_score": 0.7219,
+        "precision_macro": 0.6936,
+        "recall_macro": 0.6815,
+        "f1_score_macro": 0.6861,
+        "cv_mean": 0.7177,
+        "cv_std": 0.0383,
+        "training_time": 0.1172,
+        "confusion_matrix": [
+          [
+            97,
+            21
+          ],
+          [
+            28,
+            33
+          ]
+        ],
+        "confusion_matrix_normalized": [
+          [
+            0.8220338983050848,
+            0.17796610169491525
+          ],
+          [
+            0.45901639344262296,
+            0.5409836065573771
+          ]
+        ],
+        "class_labels": [
+          "0",
+          "1"
+        ]
+      }
+    },
+    {
+      "algorithm": "Support Vector Machine (SVM)",
+      "router_rank": 3,
+      "router_score": 7.4,
+      "training_time": 0.0221,
+      "metrics": {
+        "accuracy": 0.676,
+        "precision": 0.676,
+        "recall": 0.676,
+        "f1_score": 0.676,
+        "precision_macro": 0.6394,
+        "recall_macro": 0.6394,
+        "f1_score_macro": 0.6394,
+        "cv_mean": 0.7148,
+        "cv_std": 0.0296,
+        "training_time": 0.0221,
+        "confusion_matrix": [
+          [
+            89,
+            29
+          ],
+          [
+            29,
+            32
+          ]
+        ],
+        "confusion_matrix_normalized": [
+          [
+            0.7542372881355932,
+            0.2457627118644068
+          ],
+          [
+            0.47540983606557374,
+            0.5245901639344263
+          ]
+        ],
+        "class_labels": [
+          "0",
+          "1"
+        ]
+      }
+    }
+  ],
+  "best_model": {
+    "algorithm": "Gradient Boosting Classifier",
+    "metrics": {
+      "accuracy": 0.7263,
+      "precision": 0.7198,
+      "recall": 0.7263,
+      "f1_score": 0.7219,
+      "precision_macro": 0.6936,
+      "recall_macro": 0.6815,
+      "f1_score_macro": 0.6861,
+      "cv_mean": 0.7177,
+      "cv_std": 0.0383,
+      "training_time": 0.1172,
+      "confusion_matrix": [
+        [
+          97,
+          21
+        ],
+        [
+          28,
+          33
+        ]
+      ],
+      "confusion_matrix_normalized": [
+        [
+          0.8220338983050848,
+          0.17796610169491525
+        ],
+        [
+          0.45901639344262296,
+          0.5409836065573771
+        ]
+      ],
+      "class_labels": [
+        "0",
+        "1"
+      ]
+    }
+  }
+}
